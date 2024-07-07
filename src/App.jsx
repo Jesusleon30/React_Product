@@ -1,4 +1,36 @@
+import { useState } from "react";
 export default function App() {
+
+  // Creamos nuestros estados
+  const [nombre, setNombre] = useState("");
+  const [precio, setPrecio] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Para evitar que se refresque
+    // Metodo B
+    const dataEnviada = new FormData()
+    dataEnviada.append('nombre', nombre)
+    //  {
+    //    'nombre'  :  'tv samsung'
+    //}
+    dataEnviada.append('precio', precio)
+          // {
+          //   'nombre'  :  'tv samsung'
+          //    "precio": "50"
+          //}
+    try {
+      const data = await fetch("http://127.0.0.1:8000/api/v1/product/", {
+        method: 'POST',
+        body: dataEnviada
+      });
+      alert("Creacion Exitosa")
+      setNombre("")
+      setPrecio("")
+    }catch (error){
+      console.error("Ah ocurrido un error al enviar esta data al backend")
+    }
+  }
+
   return (
     <>
       <header className="bg-slate-800">
@@ -15,7 +47,7 @@ export default function App() {
             Ver lista de Productos
           </button>
         </div>
-        <form className="flex flex-col">
+        <form onSubmit={handleSubmit}  className="flex flex-col">
           <div className="flex flex-col gap-3 mt-2">
             <label
               htmlFor="nombre"
@@ -26,6 +58,8 @@ export default function App() {
             <input
               id="nombre"
               name="nombre"
+              value={nombre}
+              onChange={(e)=> setNombre(e.target.value)}
               placeholder="Introduce el nombre del producto aqui"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -39,6 +73,8 @@ export default function App() {
               type="text"
               id="precio"
               name="precio"
+              value={precio}
+              onChange={(e)=> setPrecio(e.target.value)}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Introduce el precio del producto"
             />
