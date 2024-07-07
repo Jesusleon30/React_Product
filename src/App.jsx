@@ -20,7 +20,7 @@ export default function App() {
     formData.append("image", image); // Agrega el archivo al FormData
     // Ahora mi data se vera asi
     //  image : http://127.0.0.1:8000/productos/IMG_8957_qikNuTh.jpg"
-    // nombre : "asdasdasd"
+    // nombre : "Mi Tour"
     // precio :  "3123" 
     try {
       const response = await fetch("http://127.0.0.1:8000/api/v1/product/", {
@@ -30,6 +30,7 @@ export default function App() {
 
       if (response.ok) {
         console.log("Producto registrado con éxito");
+        alert("Que se registro existoso")
       } else {
         console.error("Error al registrar el producto");
       }
