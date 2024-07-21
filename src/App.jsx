@@ -13,6 +13,7 @@ export default function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // metodo B:
     const formData = new FormData();
     formData.append("nombre", nombre);
     formData.append("precio", precio);
@@ -22,6 +23,8 @@ export default function App() {
     //  image : http://127.0.0.1:8000/productos/IMG_8957_qikNuTh.jpg"
     // nombre : "Mi Tour"
     // precio :  "3123" 
+
+    // envio de datos al backend con fetch aca coloco el enpoi
     try {
       const response = await fetch("http://127.0.0.1:8000/api/v1/product/", {
         method: "POST",
@@ -31,6 +34,9 @@ export default function App() {
       if (response.ok) {
         console.log("Producto registrado con éxito");
         alert("Que se registro existoso")
+        setNombre("")
+        setPrecio("")
+        setImage("")
       } else {
         console.error("Error al registrar el producto");
       }
